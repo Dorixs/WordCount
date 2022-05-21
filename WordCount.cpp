@@ -1,31 +1,37 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 int main (int argc, char *argv[])
 {
+	if(argc!=3){
+		printf("请正确输入参数（3个）");
+		exit(0);
+	} 
     FILE *fp;
-    int cnt = 0;
+    int count = 0;
     if ((fp=fopen(argv[2], "r")) == NULL)
     {
-        puts("error!\n");
+        puts("打开文件失败!\n");
         return 0;
     }
-    if (argv[1][1] == 'w')
+    if (argv[1][1] == 'w' || argv[1][1] == 'W')
     {
-        char s[1024];
+        char s[500];
         while (fscanf(fp, "%s", s) != EOF)
         {
-            cnt ++;
+            count ++;
             for (int i = 1; i < strlen(s) - 1; i ++)
                 if (s[i] == ',' && s[i - 1] != ',' && s[i + 1] != ',') 
-                    cnt ++;
+                    count ++;
         }
-        printf("单词的数目是：%d\n", cnt);
+        printf("单词的数目是：%d\n", count);
     }
-    else if (argv[1][1] == 'c') 
+    else if (argv[1][1] == 'c' || argv[1][1] == 'C') 
     {
         char c;
-        while ((c = fgetc(fp)) != EOF) cnt ++;
-        printf("字符的数目是: %d", cnt);
+        while ((c = fgetc(fp)) != EOF) 
+				count ++;
+        printf("字符的数目是: %d", count);
     }
     fclose(fp);
     return 0;
